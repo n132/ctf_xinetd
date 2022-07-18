@@ -4,11 +4,11 @@ services:
     ctf:
         build: ./
         image: ctf
-        # volumes: 
-        #     - "./src/chal1:/home/pwn/pwn:ro"
-        #     - "./src/flag:/flag:ro"
-        #     - "./xinetd:/etc/xinetd.d/xinetd:ro"
-            # - "./tmp:/tmp:ro"
+        volumes: 
+            - "./bin/chal1:/home/ctf/chal:ro"
+            - "./bin/flag:/home/ctf/flag:ro"
+            - "./ctf.xinetd:/etc/xinetd.d/ctf:ro"
+            - "./tmp:/tmp:ro"
         ports:
             - "60001:9999"
         expose:

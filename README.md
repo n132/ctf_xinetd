@@ -1,35 +1,46 @@
-# ctf_xinetd
+# Setup
 
-> A docker repository for deploying CTF challenges
+How to run the challenge locally:
+- `docker-compose build`
+- `docker-compose up`
 
-## Configuration
+How to interact the challenge locally:
+- `docker ps -a` to show all running containers
+- `docker exec -it public-ctf-1 bash` to interact with the container shell
 
-Put files to floder `bin`. They'll be copied to /home/ctf. **Update the flag** at the same time.
 
-Edit `ctf.xinetd`. replace `./helloworld` to your command.
+# Your Tasks
 
-You can also edit `Dockerfile, ctf.xinetd, start.sh` to custom your environment.
+I would provide the skeleton code for the exploiting script. 
 
-## Build
+Your task is to read the hints in the script and complete it.
 
-```bash
-docker build -t "helloworld" .
+# Debug 
+You can debug on your enviroment, or you can use mine: 
+
+`docker pull n132/pwn:20.04` (I installed the tools with [this script][1])
+
+After pull-ing the image, you can run the container with this cmd:
+`docker run --privileged -it n132/pwn:20.04 zsh`
+
+Then, you shall copy the vulnerable file to the container from the host, whose ID can be found by `docker ps -a`.
+
+Run these commands on your host to perform copy: 
+
+```sh
+docker cp ./bin/exp.py {Container ID}:/
+docker cp ./bin/chal1 {Container ID}:/
 ```
 
-DO NOT use *bin* as challenge's name
+Now we can debug the binary on your container by running `python3 exp.py`. Please don't forget to run `tmux` before debugging.
 
-## Run
+You can also find more cmds on this page: `https://docs.docker.com/engine/reference/commandline/docker/`.
 
-```bash
-docker run -d -p "0.0.0.0:pub_port:9999" -h "helloworld" --name="helloworld" helloworld
-```
+# Debug with GDB
 
-`pub_port` is the port you want to expose to the public network.
+This [article][2] help you to debug with GDB.
 
-## Capture traffic
 
-If you want to capture challenge traffic, just run `tcpdump` on the host. Here is an example.
 
-```bash
-tcpdump -w helloworld.pcap -i eth0 port pub_port
-```
+[1]: https://github.com/n132/CTF-Challenges/blob/main/Enviroment/Docker/Ubuntu20.04.sh
+[2]: https://n132.github.io/2018/03/06/Debug_With_GDB.html
