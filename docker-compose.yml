@@ -9,7 +9,7 @@ services:
             - "./bin/start.sh:/home/ctf/start.sh:ro"
             - "./bin/flag:/home/ctf/flag:ro"
             - "./ctf.xinetd:/etc/xinetd.d/ctf:ro"
-            - "./tmp:/tmp:ro"
+#             - "./tmp:/tmp:ro"
         ports:
             - "60001:9999"
         expose:
